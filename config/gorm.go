@@ -15,7 +15,7 @@ type Gorm struct {
 	Username string
 	Password string
 	Port     string
-	Address  string
+	Host     string
 	Database string
 
 	// db connection
@@ -37,7 +37,7 @@ func InitGorm() error {
 		Username: os.Getenv("POSTGRES_USER"),
 		Password: os.Getenv("POSTGRES_PASSWORD"),
 		Port:     os.Getenv("POSTGRES_PORT"),
-		Address:  os.Getenv("POSTGRES_ADDRESS"),
+		Host:     os.Getenv("POSTGRES_HOST"),
 		Database: os.Getenv("POSTGRES_DB"),
 	}
 
@@ -52,7 +52,7 @@ func InitGorm() error {
 
 func (p *Gorm) OpenConnection() error {
 	// init dsn
-	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", p.Address, p.Port, p.Username, p.Password, p.Database)
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", p.Host, p.Port, p.Username, p.Password, p.Database)
 
 	dbConnection, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
